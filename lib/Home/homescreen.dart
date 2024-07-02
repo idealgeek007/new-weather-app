@@ -150,10 +150,41 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            SmallCard(
-              name: 'Wind',
-              imagePath: "assets/weathericons/4.png",
-              value: '17m/s',
+            SizedBox(height: width * 0.1),
+            Row(
+              children: [
+                Spacer(),
+                SmallCard(
+                  name: 'Wind',
+                  imagePath: 'assets/weathericons/wind.png',
+                  value: '17m/s',
+                ),
+                Spacer(),
+                SmallCard(
+                  name: 'Wind',
+                  imagePath: 'assets/weathericons/humidity.png',
+                  value: '17m/s',
+                ),
+                Spacer(),
+              ],
+            ),
+            SizedBox(height: width * 0.1),
+            Row(
+              children: [
+                Spacer(),
+                SmallCard(
+                  name: 'Wind',
+                  imagePath: 'assets/weathericons/wind.png',
+                  value: '17m/s',
+                ),
+                Spacer(),
+                SmallCard(
+                  name: 'Wind',
+                  imagePath: 'assets/weathericons/humidity.png',
+                  value: '17m/s',
+                ),
+                Spacer(),
+              ],
             )
           ],
         ),
