@@ -1,8 +1,11 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:weather_app/Components/smallcard.dart';
+import 'package:weather_app/Components/sunPath.dart';
 import 'package:weather_app/Utils/SizeConfig.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,28 +52,37 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(
                 left: 30.0,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  GradientText(
-                    city, // Use city variable
-                    style: GoogleFonts.lato(
-                      fontSize: width * 0.15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    colors: [
-                      Color(0xFF90CAF9),
-                      Color(0xFF42A5F5),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        city,
+                        style: GoogleFonts.poppins(
+                          fontSize: width * 0.12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        /*  colors: [
+                          Color(0xFF90CAF9),
+                          Color(0xFF42A5F5),
+                        ],*/
+                      ),
+                      Text(
+                        date,
+                        style: GoogleFonts.poppins(
+                            fontSize: width * 0.045,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
                     ],
                   ),
-                  Text(
-                    date, // Use date variable
-                    style: GoogleFonts.lato(
-                        fontSize: width * 0.07,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54),
-                  ),
+                  Expanded(
+                    child: Image.asset(
+                      "assets/weathericons/map.png",
+                    ),
+                  )
                 ],
               ),
             ),
@@ -115,8 +127,7 @@ class _HomePageState extends State<HomePage> {
                   top: -30,
                   left: 35,
                   width: width * 0.4,
-                  child: Image.asset(
-                      "assets/weathericons/9.png"), // Replace with dynamic icon based on condition
+                  child: Image.asset("assets/weathericons/9.png"),
                 ),
                 Positioned(
                   top: 20,
@@ -141,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   left: 40,
                   child: Text(
                     'Condition',
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.poppins(
                       fontSize: width * 0.1,
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
@@ -161,31 +172,28 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Spacer(),
                 SmallCard(
-                  name: 'Wind',
-                  imagePath: 'assets/weathericons/humidity.png',
+                  name: 'Humidity',
+                  imagePath: 'assets/weathericons/humidity2.png',
+                  value: '17m/s',
+                ),
+                Spacer(),
+                SmallCard(
+                  name: 'UV',
+                  imagePath: 'assets/weathericons/UV.png',
                   value: '17m/s',
                 ),
                 Spacer(),
               ],
             ),
-            SizedBox(height: width * 0.1),
-            Row(
-              children: [
-                Spacer(),
-                SmallCard(
-                  name: 'Wind',
-                  imagePath: 'assets/weathericons/wind.png',
-                  value: '17m/s',
-                ),
-                Spacer(),
-                SmallCard(
-                  name: 'Wind',
-                  imagePath: 'assets/weathericons/humidity.png',
-                  value: '17m/s',
-                ),
-                Spacer(),
-              ],
-            )
+            Spacer(),
+            Expanded(
+                child: Center(
+                    child: SunMoonPath(
+              sunrise: DateTime(2024, 7, 4, 5, 30),
+              sunset: DateTime(2024, 7, 4, 18, 30),
+              moonrise: DateTime(2024, 7, 4, 18, 30),
+              moonset: DateTime(2024, 7, 4, 5, 30),
+            )))
           ],
         ),
       ),

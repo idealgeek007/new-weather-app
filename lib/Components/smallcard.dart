@@ -22,49 +22,53 @@ class SmallCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
 
-    return Container(
-      width: SizeConfig.screenWidth * 0.3,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFFACCCFD),
-            Color(0xFFACCCFD),
-            Color(0xFFACCCFD),
-            Color(0xFF78A2E8),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
+    return Column(
+      children: [
+        Container(
+          width: SizeConfig.screenWidth * 0.2,
+          height: SizeConfig.screenWidth * 0.2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            gradient: LinearGradient(
+              colors: [
+                Colors.white,
+                Color(
+                  0xFFC9DBF9,
+                ),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blue.withOpacity(0.5),
+                offset: Offset(5, 5),
+                blurRadius: 50,
+                spreadRadius: 3,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Image.asset(
               imagePath,
               width: width * 0.15,
               height: width * 0.15,
             ),
-            SizedBox(height: 10),
-            Text(
-              name,
-              style: GoogleFonts.rubik(
-                fontSize: width * 0.07,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              value,
-              style: GoogleFonts.rubik(
-                fontSize: width * 0.07,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          name,
+          style: GoogleFonts.poppins(
+            fontSize: width * 0.034,
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }
