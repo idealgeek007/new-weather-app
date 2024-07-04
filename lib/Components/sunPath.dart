@@ -74,7 +74,6 @@ class _SunPathState extends State<SunPath> with SingleTickerProviderStateMixin {
     return Container(
       width: 300,
       height: 300,
-      decoration: BoxDecoration(),
       child: Stack(
         children: [
           Positioned(
@@ -174,8 +173,8 @@ class _NightPathState extends State<NightPath>
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 300,
-      decoration: BoxDecoration(),
+      height: 150,
+      decoration: BoxDecoration(border: Border.all()),
       child: Stack(
         children: [
           Positioned(
@@ -210,8 +209,8 @@ class _NightPathState extends State<NightPath>
                 child: Center(
                   child: Transform.translate(
                     offset: Offset(
-                      150 * cos(_controller.value * pi - pi / 2),
-                      150 * sin(_controller.value * pi - pi / 2),
+                      1 * cos(_controller.value * pi - pi / 2),
+                      1 * sin(_controller.value * pi - pi / 2),
                     ),
                     child: MoonIcon(),
                   ),
@@ -238,12 +237,12 @@ class ArcPainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2), radius: 150))
+          center: Offset(size.width / 2, size.height), radius: 150))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0;
 
     final Rect rect = Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2), radius: 150);
+        center: Offset(size.width / 2, size.height), radius: 150);
     canvas.drawArc(rect, -pi, pi, false, paint);
   }
 
@@ -264,12 +263,12 @@ class MoonArcPainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2), radius: 150))
+          center: Offset(size.width / 2, size.height), radius: 150))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0;
 
     final Rect rect = Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2), radius: 150);
+        center: Offset(size.width / 2, size.height), radius: 150);
     canvas.drawArc(rect, -pi, pi, false, paint);
   }
 

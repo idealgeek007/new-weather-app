@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:weather_app/Utils/SizeConfig.dart';
 
 class SmallCard extends StatelessWidget {
@@ -24,6 +23,17 @@ class SmallCard extends StatelessWidget {
 
     return Column(
       children: [
+        Text(
+          name,
+          style: GoogleFonts.poppins(
+            fontSize: width * 0.039,
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(
+          height: width * 0.01,
+        ),
         Container(
           width: SizeConfig.screenWidth * 0.2,
           height: SizeConfig.screenWidth * 0.2,
@@ -58,13 +68,13 @@ class SmallCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: width * 0.01,
         ),
         Text(
-          name,
+          value,
           style: GoogleFonts.poppins(
-            fontSize: width * 0.034,
-            color: Colors.black54,
+            fontSize: width * 0.04,
+            color: Colors.black87,
             fontWeight: FontWeight.w600,
           ),
         ),

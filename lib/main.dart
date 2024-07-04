@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/Home/homescreen.dart';
+import 'package:weather_app/LoadingScreen/loadingscreen.dart';
 
 import 'Utils/SizeConfig.dart';
 
@@ -17,11 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: HomePage(),
+      home: LoadingScreen(),
     );
   }
 }

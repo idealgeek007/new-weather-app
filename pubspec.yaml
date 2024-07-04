@@ -18,6 +18,11 @@ dependencies:
   google_fonts: ^6.2.1
   simple_gradient_text: ^1.3.0
   geolocator:
+  http:
+  flutter_spinkit:
+  permission_handler:
+  flutter_svg:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:
@@ -31,4 +36,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/conditions/
     - assets/weathericons/
