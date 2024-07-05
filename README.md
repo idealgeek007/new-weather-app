@@ -25,6 +25,12 @@ A simple Flutter weather application that allows users to search for weather inf
    ```sh
    git clone https://github.com/your-username/weather_app.git
    cd weather_app
+   
+2. Install Dependencies
+    ```sh
    flutter pub get
+
+3. Run the app
+    ```sh
    flutter run
    
