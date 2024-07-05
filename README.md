@@ -1,13 +1,12 @@
 # Weather App
 
-A simple Flutter weather application that allows users to search for weather information by city name. The app also keeps track of recent searches, allowing users to easily revisit their previous queries.
+A simple Flutter weather application that allows users to view weather information basded on location or search for weather information by city name. The app also keeps track of recent searches, allowing users to easily revisit their previous queries.
 
 ## Features
 
+- Display weather information based on location
 - Search for weather information by city name
 - Display recent searches
-- Delete individual recent searches
-- Clear all recent searches
 - Persistent storage of recent searches using Hive
 
 ## Getting Started
