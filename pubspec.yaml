@@ -17,7 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   simple_gradient_text: ^1.3.0
-  geolocator:
+  geolocator: 11.0.0
   http:
   flutter_spinkit:
   permission_handler:
@@ -30,7 +30,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
+dependency_overrides:
+  geolocator_android: 4.5.4
 #  flutter_lints: ^3.0.0
 
 flutter:

@@ -23,26 +23,79 @@ class _LoadingScreenState extends State<LoadingScreen> {
     var status = await Permission.location.request();
 
     if (status == PermissionStatus.granted) {
+      var accuracy = Permission.location.value;
+      print(accuracy);
+
       getLocation();
     } else {
-      print('Location permission not granted');
-
-      openAppSettings();
+      showPermissionDialog();
     }
   }
 
-  void getLocation() async {
-    var weatherData = await WeatherModel().getLocationWeather();
+  void showPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Location Permission Required"),
+          content: Text(
+              "This app needs location access to provide weather information. Please grant location permission."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Deny"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Settings"),
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return HomePage(
-            locationWeather: weatherData,
-          );
-        },
-      ),
+  void getLocation() async {
+    try {
+      var weatherData = await WeatherModel().getLocationWeather();
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return HomePage(
+              locationWeather: weatherData,
+            );
+          },
+        ),
+      );
+    } catch (e) {
+      showErrorDialog();
+    }
+  }
+
+  void showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(
+              "An error occurred while fetching weather data. Please try again later."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
