@@ -1,14 +1,12 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:weather_app/Components/smallcard.dart';
-import 'package:weather_app/Components/sunPath.dart';
 import 'package:weather_app/Utils/SizeConfig.dart';
 import '../Search/searchPage.dart';
 import '../Services/weatherData.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({this.locationWeather});
@@ -58,7 +56,7 @@ class _HomePageState extends State<HomePage> {
         temp = 0;
         weatherIcon = 'Error';
         weatherMessage = 'Unable to get weather data';
-        cityName = '';
+        cityName = 'Not Found';
         windspeed = 0;
         rain = 0;
         vis_km = 0;
@@ -127,54 +125,73 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: width * 0.15),
-              Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    var typedName = await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CityScreen()),
-                    );
-                    if (typedName != null) {
-                      var weatherData = await weather.getCityWeather(typedName);
-                      updateUI(weatherData);
-                    }
-                  },
-                  child: Container(
-                    width: width * 0.8,
-                    height: width * 0.15,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue.withOpacity(0.5),
-                          offset: Offset(5, 5),
-                          blurRadius: 50,
-                          spreadRadius: 3,
-                          blurStyle: BlurStyle.inner,
-                        ),
-                      ],
+              Row(
+                children: [
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Bootstrap.geo,
+                      size: width * 0.1,
+                      color: Colors.black87,
                     ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          Text(
-                            'Search',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                              fontSize: width * 0.09,
+                    onPressed: () async {
+                      var weatherData = await weather.getLocationWeather();
+                      updateUI(weatherData);
+                    },
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        var typedName = await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CityScreen()),
+                        );
+                        if (typedName != null) {
+                          var weatherData =
+                              await weather.getCityWeather(typedName);
+                          updateUI(weatherData);
+                        }
+                      },
+                      child: Container(
+                        width: width * 0.8,
+                        height: width * 0.15,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.withOpacity(0.5),
+                              offset: Offset(5, 5),
+                              blurRadius: 50,
+                              spreadRadius: 3,
+                              blurStyle: BlurStyle.inner,
                             ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              Text(
+                                'Search',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: width * 0.09,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(Icons.search, size: 45),
+                            ],
                           ),
-                          Spacer(),
-                          Icon(Icons.search, size: 45),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
               SizedBox(height: width * 0.05),
               Padding(
@@ -192,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                               maxWidth: width * 0.6,
                             ),
                             child: Text(
-                              cityName ?? '',
+                              cityName ?? 'Not found',
                               style: GoogleFonts.poppins(
                                 fontSize: width * 0.1,
                                 fontWeight: FontWeight.bold,
@@ -342,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                   SmallCard(
                     name: 'Precepitation',
                     imagePath: 'assets/weathericons/precp.png',
-                    value: "$rainper mm" ?? '',
+                    value: "$rainper mm",
                   ),
                   Spacer(),
                 ],

@@ -28,13 +28,13 @@ class WeatherModel {
       if (isday == 1) {
         return 'assets/conditions/clear.png';
       } else {
-        return 'assets/condition/moon.png';
+        return 'assets/conditions/moon.png';
       }
     } else if (condition == 1003 || condition == 1006 || condition == 1009) {
       if (isday == 1) {
         return 'assets/conditions/cloudy.png';
       } else {
-        return 'assets/condition/cloudynight.png';
+        return 'assets/conditions/cloudynight.png';
       }
     } else if (condition == 1030 || condition == 1135 || condition == 1147) {
       return 'assets/conditions/fog.png';
@@ -48,9 +48,9 @@ class WeatherModel {
         (condition >= 1279 && condition <= 1282)) {
       return 'assets/conditions/snow.png';
     } else if (condition == 1117 || condition == 1246 || condition == 1282) {
-      return 'assets/extreme.png';
+      return 'assets/conditions/extreme.png';
     } else {
-      return 'assets/extreme.png';
+      return 'assets/conditions/extreme.png';
     }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:weather_app/Utils/SizeConfig.dart';
 
 class CityScreen extends StatefulWidget {
@@ -9,7 +11,49 @@ class CityScreen extends StatefulWidget {
 
 class _CityScreenState extends State<CityScreen> {
   String? cityName;
+  List<String> recentCities = [];
   var width = SizeConfig.screenWidth;
+  final Box<String> recentCitiesBox = Hive.box<String>('recentCitiesBox');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRecentCities();
+  }
+
+  void _loadRecentCities() {
+    setState(() {
+      recentCities = recentCitiesBox.values.toList();
+    });
+    print('Loaded recent cities: $recentCities');
+  }
+
+  void _saveRecentCity(String city) {
+    if (!recentCities.contains(city)) {
+      recentCitiesBox.add(city);
+      setState(() {
+        recentCities.add(city);
+      });
+    }
+    print('Saved recent cities: $recentCities');
+  }
+
+  void _deleteRecentCity(int index) {
+    recentCitiesBox.deleteAt(index);
+    setState(() {
+      recentCities.removeAt(index);
+    });
+    print('Deleted city at index $index');
+  }
+
+  void _clearAllRecentCities() {
+    recentCitiesBox.clear();
+    setState(() {
+      recentCities.clear();
+    });
+    print('Cleared all recent cities');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +70,15 @@ class _CityScreenState extends State<CityScreen> {
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            /*transform: GradientRotation(
-              0.25 * pi,
-            ),*/
           ),
         ),
         constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: width * 0.01,
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
@@ -42,9 +86,9 @@ class _CityScreenState extends State<CityScreen> {
                     Navigator.pop(context);
                   },
                   child: Icon(
-                    Icons.arrow_back,
+                    Bootstrap.arrow_left_short,
                     size: width * 0.1,
-                    color: Color(0xFF5896FD),
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -56,8 +100,8 @@ class _CityScreenState extends State<CityScreen> {
                     filled: true,
                     hintText: 'Enter City',
                     icon: Icon(
-                      Icons.location_city_outlined,
-                      color: Colors.black,
+                      Bootstrap.map,
+                      color: Colors.black87,
                       size: width * 0.08,
                     ),
                     hintStyle: GoogleFonts.poppins(
@@ -109,7 +153,10 @@ class _CityScreenState extends State<CityScreen> {
                     shadowColor: Colors.transparent,
                   ),
                   onPressed: () {
-                    Navigator.pop(context, cityName);
+                    if (cityName != null && cityName!.isNotEmpty) {
+                      _saveRecentCity(cityName!);
+                      Navigator.pop(context, cityName);
+                    }
                   },
                   child: Text(
                     'GET WEATHER',
@@ -120,6 +167,101 @@ class _CityScreenState extends State<CityScreen> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Recent Searches',
+                style: GoogleFonts.poppins(
+                  fontSize: width * 0.05,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              recentCities.isNotEmpty
+                  ? TextButton(
+                      onPressed: _clearAllRecentCities,
+                      child: Text(
+                        'Clear All',
+                        style: GoogleFonts.poppins(
+                          fontSize: width * 0.04,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black45,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Expanded(
+                child: recentCities.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No recent searches',
+                          style: GoogleFonts.poppins(
+                            fontSize: width * 0.04,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: recentCities.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 5.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue.withOpacity(0.5),
+                                    offset: Offset(3, 5),
+                                    blurRadius: 50,
+                                    spreadRadius: 3,
+                                    blurStyle: BlurStyle.inner,
+                                  ),
+                                ],
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.black,
+                                ),
+                                /*  gradient: LinearGradient(
+                                  colors: [
+                                    Colors.blue[100]!,
+                                    Colors.blue[300]!
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),*/
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Card(
+                                color: Colors.transparent,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: ListTile(
+                                  title: Text(
+                                    recentCities[index],
+                                    style: GoogleFonts.poppins(
+                                      fontSize: width * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete_outlined),
+                                    color: Colors.black45,
+                                    onPressed: () {
+                                      _deleteRecentCity(index);
+                                    },
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context, recentCities[index]);
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
             ],
           ),

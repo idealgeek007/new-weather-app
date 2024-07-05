@@ -22,8 +22,10 @@ dependencies:
   flutter_spinkit:
   permission_handler:
   flutter_svg:
-  fluttertoast:
-
+  shared_preferences:
+  hive:
+  hive_flutter:
+  icons_plus: ^5.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
