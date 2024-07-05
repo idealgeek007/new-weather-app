@@ -9,6 +9,8 @@ class CityScreen extends StatefulWidget {
   _CityScreenState createState() => _CityScreenState();
 }
 
+// Hive package added to store recent cities to device storage to be used later if needed
+
 class _CityScreenState extends State<CityScreen> {
   String? cityName;
   List<String> recentCities = [];
@@ -20,6 +22,8 @@ class _CityScreenState extends State<CityScreen> {
     super.initState();
     _loadRecentCities();
   }
+
+  // Display recent cities
 
   void _loadRecentCities() {
     setState(() {
@@ -46,6 +50,7 @@ class _CityScreenState extends State<CityScreen> {
     print('Deleted city at index $index');
   }
 
+  // Function to delete recent history
   void _clearAllRecentCities() {
     recentCitiesBox.clear();
     setState(() {
@@ -79,6 +84,9 @@ class _CityScreenState extends State<CityScreen> {
               SizedBox(
                 height: width * 0.01,
               ),
+
+              // Icon to go back to weather page
+
               Align(
                 alignment: Alignment.topLeft,
                 child: TextButton(
@@ -92,6 +100,9 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                 ),
               ),
+
+              // Input field to take city name
+
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: TextField(
@@ -123,6 +134,9 @@ class _CityScreenState extends State<CityScreen> {
                   },
                 ),
               ),
+
+              // Button to search city weather
+
               Container(
                 width: width * 0.9,
                 height: width * 0.13,
@@ -169,6 +183,9 @@ class _CityScreenState extends State<CityScreen> {
                 ),
               ),
               SizedBox(height: 20.0),
+
+              // Display of recent searches
+
               Text(
                 'Recent Searches',
                 style: GoogleFonts.poppins(
@@ -177,6 +194,9 @@ class _CityScreenState extends State<CityScreen> {
                   color: Colors.black,
                 ),
               ),
+
+              //Text button to clear recent searches history
+
               recentCities.isNotEmpty
                   ? TextButton(
                       onPressed: _clearAllRecentCities,
@@ -222,14 +242,6 @@ class _CityScreenState extends State<CityScreen> {
                                 border: Border.all(
                                   color: Colors.black,
                                 ),
-                                /*  gradient: LinearGradient(
-                                  colors: [
-                                    Colors.blue[100]!,
-                                    Colors.blue[300]!
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),*/
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               child: Card(

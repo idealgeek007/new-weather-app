@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/Utils/SizeConfig.dart';
@@ -27,7 +26,7 @@ class SmallCard extends StatelessWidget {
           name,
           style: GoogleFonts.poppins(
             fontSize: width * 0.039,
-            color: Colors.black54,
+            color: Colors.black87,
             fontWeight: FontWeight.w600,
           ),
         ),

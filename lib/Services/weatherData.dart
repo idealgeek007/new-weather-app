@@ -5,6 +5,8 @@ const apikey = '801c2fd8726c4230bb473334230512';
 const weatherApi = 'http://api.weatherapi.com/v1/forecast.json?key=$apikey';
 
 class WeatherModel {
+  // Get weather information from APi from given city name
+
   Future<dynamic> getCityWeather(String typedname) async {
     var url =
         'https://api.weatherapi.com/v1/forecast.json?key=$apikey&q=$typedname&days=7';
@@ -12,6 +14,8 @@ class WeatherModel {
     var weatherData = networkHelper.getData();
     return weatherData;
   }
+
+  // Get weather data of current device location
 
   Future<dynamic> getLocationWeather() async {
     Location location = Location();
@@ -22,6 +26,8 @@ class WeatherModel {
     var weatherData = await networkHelper.getData();
     return weatherData;
   }
+
+  // function to give location of weather condition images displayed on weather page card
 
   String getWeatherIcon(int condition, int isday) {
     if (condition == 1000) {
