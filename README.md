@@ -33,5 +33,5 @@ A simple Flutter weather application that allows users to view weather informati
     ```sh
    flutter run
    
-!(https://github.com/idealgeek007/new-weather-app/assets/90248052/8e9ec73a-428f-4a8f-861b-de22d1a8619e)
-!(https://github.com/idealgeek007/new-weather-app/assets/90248052/6833e681-fb19-4b77-b5d3-2c3c26b9b8fc)
+![Homepage](https://github.com/idealgeek007/new-weather-app/assets/90248052/8e9ec73a-428f-4a8f-861b-de22d1a8619e)
+![Search page](https://github.com/idealgeek007/new-weather-app/assets/90248052/6833e681-fb19-4b77-b5d3-2c3c26b9b8fc)
