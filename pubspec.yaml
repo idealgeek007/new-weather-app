@@ -25,6 +25,8 @@ dependencies:
   shared_preferences:
   hive:
   hive_flutter:
+  location:
+  app_settings:
   icons_plus: ^5.0.0
 dev_dependencies:
   flutter_test:

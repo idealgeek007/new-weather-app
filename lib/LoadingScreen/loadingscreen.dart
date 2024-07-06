@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:location/location.dart' as loc;
+import 'package:permission_handler/permission_handler.dart' as perm;
 
 import '../Home/homescreen.dart';
 import '../Services/weatherData.dart';
@@ -19,19 +21,38 @@ class _LoadingScreenState extends State<LoadingScreen> {
     checkLocationPermission();
   }
 
+  // Check if location permission is given
   void checkLocationPermission() async {
-    var status = await Permission.location.request();
+    loc.Location location = loc.Location();
 
-    if (status == PermissionStatus.granted) {
-      var accuracy = Permission.location.value;
-      print(accuracy);
+    bool serviceEnabled;
+    loc.PermissionStatus permissionGranted;
 
-      getLocation();
-    } else {
-      showPermissionDialog();
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        showPermissionDialog();
+        return;
+      }
     }
+
+    permissionGranted = await location.hasPermission();
+    print("\n\n\n\n\n\n");
+    print(loc.PermissionStatus);
+    print("\n\n\n\n\n\n");
+    if (permissionGranted == loc.PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != loc.PermissionStatus.granted) {
+        showPermissionDialog();
+        return;
+      }
+    }
+
+    getLocation();
   }
 
+  // If permission not given show dialog box to open settings
   void showPermissionDialog() {
     showDialog(
       context: context,
@@ -44,13 +65,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
             TextButton(
               child: Text("Deny"),
               onPressed: () {
-                Navigator.of(context).pop();
+                SystemNavigator.pop();
               },
             ),
             TextButton(
               child: Text("Settings"),
               onPressed: () {
-                openAppSettings();
+                perm.openAppSettings();
               },
             ),
           ],
@@ -59,6 +80,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 
+  // get initial location and weather data
   void getLocation() async {
     try {
       var weatherData = await WeatherModel().getLocationWeather();
